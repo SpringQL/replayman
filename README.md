@@ -34,18 +34,6 @@ $ replayman \
   AirConditioner-30sec.tsv
 ```
 
-#### Batch log dump
-
-```bash
-nc -l 19870
-```
-
-```bash
-$ replayman \
-  --dest-addr 'localhost:19870' \
-  AirConditioner-30sec.tsv
-```
-
 ## License
 
 Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT) at your option.
