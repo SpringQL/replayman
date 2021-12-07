@@ -1,4 +1,6 @@
-use anyhow::{anyhow, Result};
+use std::net::{SocketAddr, ToSocketAddrs};
+
+use anyhow::{anyhow, Context, Result};
 use chrono::DateTime;
 use clap::Parser;
 use springql_foreign_service::source::source_input::{
@@ -25,6 +27,11 @@ struct Opts {
     /// Must be formatted in RFC-3339 (e.g. 2006-04-13T14:12:53.4242+05:30)
     #[clap(long)]
     initial_timestamp: String,
+
+    /// TCP address:port to write logs to.
+    /// (e.g. localhost:19870)
+    #[clap(long)]
+    dest_addr: String,
 
     /// Log file to replay
     log_file_path: String,
@@ -54,5 +61,13 @@ impl CmdParser {
             TimedStream::new(log_file_type, log_file_path, timed_by, initial_timestamp)?;
 
         Ok(ForeignSourceInput::new_timed_stream(timed_stream))
+    }
+
+    pub(super) fn dest_addr(&self) -> Result<SocketAddr> {
+        self.0
+            .dest_addr
+            .to_socket_addrs()?
+            .next()
+            .context("empty address?")
     }
 }
