@@ -7,6 +7,13 @@ license = "MIT OR Apache-2.0"
 
 edition = "2021"
 
+categories = []
+description = "Log agent to replay time-stamped log stream."
+documentation = "https://docs.rs/replayman"
+keywords = ["springql", "log-agent"] # up to 5 keywords, each keyword should have <= 20 chars
+repository = "https://github.com/SpringQL/replayman"
+readme = "README.md"
+
 [dependencies]
 springql-foreign-service = "0.1"
 
