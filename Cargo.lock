@@ -338,9 +338,9 @@ dependencies = [
 
 [[package]]
 name = "springql-foreign-service"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b30a3bf384c61166d2da412106bf108010afba8e5c18c4ac286cc054c7fcfb5b"
+checksum = "f80eceaa349d00b2702401734635fedfff5180f9a9e0cecd5d1629b91725dad5"
 dependencies = [
  "anyhow",
  "chrono",
