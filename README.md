@@ -28,7 +28,6 @@ nc -l 19870
 
 ```bash
 $ replayman \
-  --file-type tsv \
   --timed-by Time \
   --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
   --dest-addr 'localhost:19870' \
@@ -43,7 +42,6 @@ nc -l 19870
 
 ```bash
 $ replayman \
-  --file-type tsv \
   --dest-addr 'localhost:19870' \
   AirConditioner-30sec.tsv
 ```
