@@ -52,7 +52,7 @@ for rs in $(git ls-files |grep -e '\.rs$') ; do grep '// Copyright (c) 2021 TOYO
 script = [
   '''
 #!/usr/bin/env bash -eux
-cargo workspaces publish
+cargo publish
 ''',
 ]
 
