@@ -31,7 +31,7 @@ struct Opts {
     /// TCP address:port to write logs to.
     /// (e.g. localhost:19870)
     #[clap(long)]
-    dest_addr: String,
+    dest_tcp: String,
 
     /// Log file to replay
     log_file_path: String,
@@ -65,7 +65,7 @@ impl CmdParser {
 
     pub(super) fn dest_addr(&self) -> Result<SocketAddr> {
         self.0
-            .dest_addr
+            .dest_tcp
             .to_socket_addrs()?
             .next()
             .context("empty address?")
