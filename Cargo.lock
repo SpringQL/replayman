@@ -456,6 +456,8 @@ dependencies = [
  "anyhow",
  "chrono",
  "clap",
+ "env_logger",
+ "log",
  "rumqttc",
  "springql-foreign-service",
 ]

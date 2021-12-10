@@ -8,9 +8,13 @@ use agent::Agent;
 use cmd_parser::CmdParser;
 
 fn main() {
+    let _ = env_logger::builder()
+        .is_test(false) // To enable color. Logs are not captured by test framework.
+        .try_init();
+
     let cmd_parser = CmdParser::new();
     let dest = cmd_parser.dest().unwrap();
-    let input = cmd_parser.foreign_source_input().unwrap();
+    let input = cmd_parser.logs().unwrap();
 
     let mut agent = Agent::new(dest).unwrap();
     for j in input {
