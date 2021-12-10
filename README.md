@@ -20,7 +20,7 @@ curl -O https://raw.githubusercontent.com/SpringQL/dataset/main/pseudo-in-vehicl
 
 ### Usage
 
-#### Timed log replay
+#### TCP socket
 
 ```bash
 nc -l 19870
@@ -30,7 +30,24 @@ nc -l 19870
 $ replayman \
   --timed-by Time \
   --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
-  --dest-addr '127.0.0.1:19870' \
+  --dest-tcp '127.0.0.1:19870' \
+  AirConditioner-30sec.tsv
+```
+
+#### MQTT
+
+Using mosquitto here for example.
+
+```bash
+mosquitto_sub -h 127.0.0.1 -t replayman/test
+```
+
+```bash
+$ replayman \
+  --timed-by Time \
+  --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
+  --dest-mqtt '127.0.0.1:19870' \
+  --dest-mqtt-topic 'replayman/test' \
   AirConditioner-30sec.tsv
 ```
 
