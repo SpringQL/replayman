@@ -8,6 +8,8 @@ use std::{
 
 use anyhow::{Context, Result};
 
+use crate::destination::Destination;
+
 const CONNECT_TIMEOUT_SECS: u64 = 1;
 const WRITE_TIMEOUT_MSECS: u64 = 100;
 
@@ -16,7 +18,13 @@ pub(super) struct Agent {
 }
 
 impl Agent {
-    pub(super) fn new(dest_addr: SocketAddr) -> Result<Self> {
+    pub(super) fn new(dest: Destination) -> Result<Self> {
+        match dest {
+            Destination::Tcp(tcp_addr) => Self::new_tcp(tcp_addr),
+        }
+    }
+
+    fn new_tcp(dest_addr: SocketAddr) -> Result<Self> {
         let tcp_stream =
             TcpStream::connect_timeout(&dest_addr, Duration::from_secs(CONNECT_TIMEOUT_SECS))
                 .context("failed to connect to remote host")?;

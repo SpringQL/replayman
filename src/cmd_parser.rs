@@ -1,4 +1,4 @@
-use std::net::{SocketAddr, ToSocketAddrs};
+use std::net::ToSocketAddrs;
 
 use anyhow::{anyhow, Context, Result};
 use chrono::DateTime;
@@ -7,6 +7,8 @@ use springql_foreign_service::source::source_input::{
     timed_stream::{file_type::FileType, TimedStream},
     ForeignSourceInput,
 };
+
+use crate::destination::Destination;
 
 // Copyright (c) 2021 TOYOTA MOTOR CORPORATION. Licensed under MIT OR Apache-2.0.
 
@@ -29,9 +31,10 @@ struct Opts {
     initial_timestamp: String,
 
     /// TCP address:port to write logs to.
-    /// (e.g. localhost:19870)
+    ///
+    /// (e.g. --dest-tcp 'localhost:19870')
     #[clap(long)]
-    dest_tcp: String,
+    dest_tcp: Option<String>,
 
     /// Log file to replay
     log_file_path: String,
@@ -63,11 +66,16 @@ impl CmdParser {
         Ok(ForeignSourceInput::new_timed_stream(timed_stream))
     }
 
-    pub(super) fn dest_addr(&self) -> Result<SocketAddr> {
-        self.0
-            .dest_tcp
-            .to_socket_addrs()?
-            .next()
-            .context("empty address?")
+    pub(super) fn dest(&self) -> Result<Destination> {
+        match &self.0.dest_tcp {
+            Some(tcp_addr) => {
+                let addr = tcp_addr
+                    .to_socket_addrs()?
+                    .next()
+                    .context("empty address?")?;
+                Ok(Destination::Tcp(addr))
+            }
+            None => Err(anyhow!("At least a --dest-* option is required")),
+        }
     }
 }
