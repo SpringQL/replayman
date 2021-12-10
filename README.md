@@ -36,7 +36,7 @@ $ replayman \
 
 #### MQTT
 
-Using mosquitto here for example.
+Using [mosquitto](https://github.com/eclipse/mosquitto) here for example.
 
 ```bash
 mosquitto_sub -h 127.0.0.1 -t replayman/test
@@ -46,7 +46,7 @@ mosquitto_sub -h 127.0.0.1 -t replayman/test
 $ replayman \
   --timed-by Time \
   --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
-  --dest-mqtt '127.0.0.1:19870' \
+  --dest-mqtt '127.0.0.1:1883' \
   --dest-mqtt-topic 'replayman/test' \
   AirConditioner-30sec.tsv
 ```
