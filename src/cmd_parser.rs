@@ -1,4 +1,4 @@
-use std::net::{SocketAddr, ToSocketAddrs};
+use std::net::ToSocketAddrs;
 
 use anyhow::{anyhow, Context, Result};
 use chrono::DateTime;
@@ -7,6 +7,8 @@ use springql_foreign_service::source::source_input::{
     timed_stream::{file_type::FileType, TimedStream},
     ForeignSourceInput,
 };
+
+use crate::destination::Destination;
 
 // Copyright (c) 2021 TOYOTA MOTOR CORPORATION. Licensed under MIT OR Apache-2.0.
 
@@ -29,9 +31,19 @@ struct Opts {
     initial_timestamp: String,
 
     /// TCP address:port to write logs to.
-    /// (e.g. localhost:19870)
+    ///
+    /// (e.g. --dest-tcp 'localhost:19870')
     #[clap(long)]
-    dest_addr: String,
+    dest_tcp: Option<String>,
+
+    /// MQTT address:port to publish logs to.
+    ///
+    /// (e.g. --dest-mqtt 'localhost:19870' --dest-mqtt-topic 'your/topic')
+    #[clap(long)]
+    dest_mqtt: Option<String>,
+    /// MQTT topic.
+    #[clap(long)]
+    dest_mqtt_topic: Option<String>,
 
     /// Log file to replay
     log_file_path: String,
@@ -45,7 +57,7 @@ impl CmdParser {
         Self(opts)
     }
 
-    pub(super) fn foreign_source_input(&self) -> Result<ForeignSourceInput> {
+    pub(super) fn logs(&self) -> Result<ForeignSourceInput> {
         let log_file_type = match self.0.log_file_type.as_str() {
             "tsv" => Ok(FileType::Tsv),
             _ => Err(anyhow!(
@@ -63,11 +75,31 @@ impl CmdParser {
         Ok(ForeignSourceInput::new_timed_stream(timed_stream))
     }
 
-    pub(super) fn dest_addr(&self) -> Result<SocketAddr> {
-        self.0
-            .dest_addr
-            .to_socket_addrs()?
-            .next()
-            .context("empty address?")
+    pub(super) fn dest(&self) -> Result<Destination> {
+        match (&self.0.dest_tcp, &self.0.dest_mqtt, &self.0.dest_mqtt_topic) {
+            (Some(tcp_addr), None, None) => {
+                let addr = tcp_addr
+                    .to_socket_addrs()?
+                    .next()
+                    .context("empty address?")?;
+                Ok(Destination::Tcp(addr))
+            }
+            (None, Some(mqtt_addr), Some(mqtt_topic)) => {
+                let errmsg = || format!("failed to parse MQTT address: {}", mqtt_addr);
+
+                let mut addr = mqtt_addr.split(':');
+
+                let host = addr.next().with_context(errmsg)?;
+                let port = addr.next().with_context(errmsg)?;
+                let port: u16 = port.parse().with_context(errmsg)?;
+
+                Ok(Destination::Mqtt {
+                    host: host.to_string(),
+                    port,
+                    topic: mqtt_topic.to_string(),
+                })
+            }
+            _ => Err(anyhow!("A `--dest-*` option is required")),
+        }
     }
 }

@@ -11,8 +11,8 @@ categories = []
 description = "Log agent to replay time-stamped log stream."
 documentation = "https://docs.rs/replayman"
 keywords = ["springql", "log-agent"] # up to 5 keywords, each keyword should have <= 20 chars
-repository = "https://github.com/SpringQL/replayman"
 readme = "README.md"
+repository = "https://github.com/SpringQL/replayman"
 
 [dependencies]
 springql-foreign-service = "0.1"
@@ -22,3 +22,8 @@ chrono = "0.4"
 anyhow = "1.0"
 
 clap = "3.0.0-rc.3"
+
+rumqttc = "0.10"
+
+env_logger = "0.9"
+log = "0.4"
