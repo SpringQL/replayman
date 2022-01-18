@@ -1,4 +1,4 @@
-// Copyright (c) 2021 TOYOTA MOTOR CORPORATION. Licensed under MIT OR Apache-2.0.
+// Copyright (c) 2021-2022 TOYOTA MOTOR CORPORATION. Licensed under MIT OR Apache-2.0.
 
 mod agent;
 mod cmd_parser;
