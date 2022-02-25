@@ -15,7 +15,7 @@ readme = "README.md"
 repository = "https://github.com/SpringQL/replayman"
 
 [dependencies]
-springql-foreign-service = "0.1"
+springql-foreign-service = "0.2"
 
 chrono = "0.4"
 

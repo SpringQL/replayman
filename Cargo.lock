@@ -545,9 +545,9 @@ checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 
 [[package]]
 name = "springql-foreign-service"
-version = "0.1.1"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f80eceaa349d00b2702401734635fedfff5180f9a9e0cecd5d1629b91725dad5"
+checksum = "7125c6e888e6e5f3e28f84e7d9e23ccf86318c47bab8deb8a7884076e5227cf1"
 dependencies = [
  "anyhow",
  "chrono",
