@@ -43,10 +43,12 @@ mlc --ignore-path target
 ''']
 
 [tasks.copyright]
-script = ['''
+script = [
+  '''
 #!/usr/bin/env bash -eux
-for rs in $(git ls-files |grep -e '\.rs$') ; do grep '// Copyright (c) 2021-2022 TOYOTA MOTOR CORPORATION. Licensed under MIT OR Apache-2.0.' $rs ; done
-''']
+for rs in $(git ls-files |grep -e '\.rs$') ; do grep '// This file is part of https://github.com/SpringQL/replayman which is licensed under MIT OR Apache-2.0. See file LICENSE-MIT or LICENSE-APACHE for full license details.' $rs ; done
+''',
+]
 
 [tasks.publish]
 script = [
