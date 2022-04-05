@@ -10,7 +10,7 @@ use springql_foreign_service::source::source_input::{
 
 use crate::destination::Destination;
 
-// Copyright (c) 2021-2022 TOYOTA MOTOR CORPORATION. Licensed under MIT OR Apache-2.0.
+// This file is part of https://github.com/SpringQL/replayman which is licensed under MIT OR Apache-2.0. See file LICENSE-MIT or LICENSE-APACHE for full license details.
 
 /// Log agent to replay time-stamped log stream.
 #[derive(Parser)]
