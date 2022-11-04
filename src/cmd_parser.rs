@@ -29,6 +29,11 @@ struct Opts {
     #[clap(long)]
     initial_timestamp: String,
 
+    /// Playback speed.
+    /// If you set it to 0.5, for example, the internal virtual timer ticks at half the speed compared to wall-clock timers.
+    #[clap(long, default_value = "1")]
+    speed: String,
+
     /// TCP address:port to write logs to.
     ///
     /// (e.g. --dest-tcp 'localhost:19870')
@@ -69,9 +74,16 @@ impl CmdParser {
             self.0.initial_timestamp.as_str(),
             &time::format_description::well_known::Rfc3339,
         )?;
+        let speed = self.0.speed.parse::<f32>()?;
         let log_file_path = self.0.log_file_path.as_str();
 
-        TimedStream::new(log_file_type, log_file_path, timed_by, initial_timestamp)
+        TimedStream::new(
+            log_file_type,
+            log_file_path,
+            timed_by,
+            initial_timestamp,
+            speed,
+        )
     }
 
     pub(super) fn dest(&self) -> Result<Destination> {
