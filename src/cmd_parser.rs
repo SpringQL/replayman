@@ -13,7 +13,7 @@ use crate::{
 
 /// Log agent to replay time-stamped log stream.
 #[derive(Parser)]
-#[clap(author = "Sho Nakatani <lay.sakura@gmail.com>")]
+#[clap(author = "Sho Nakatani <lay.sakura@gmail.com>", version)]
 struct Opts {
     /// Either of: tsv
     #[clap(long, default_value = "tsv")]
