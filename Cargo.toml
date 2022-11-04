@@ -15,9 +15,10 @@ readme = "README.md"
 repository = "https://github.com/SpringQL/replayman"
 
 [dependencies]
-springql-foreign-service = "0.4"
+time = {version = "0.3.9", features = ["formatting", "parsing", "macros"]}
 
-chrono = "0.4"
+csv = "1.1"
+serde_json = "1.0"
 
 anyhow = "1.0"
 

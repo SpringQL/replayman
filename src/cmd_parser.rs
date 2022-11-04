@@ -1,14 +1,13 @@
 use std::net::ToSocketAddrs;
 
 use anyhow::{anyhow, Context, Result};
-use chrono::DateTime;
 use clap::Parser;
-use springql_foreign_service::source::source_input::{
-    timed_stream::{file_type::FileType, TimedStream},
-    ForeignSourceInput,
-};
+use time::OffsetDateTime;
 
-use crate::destination::Destination;
+use crate::{
+    destination::Destination,
+    timed_stream::{file_type::FileType, TimedStream},
+};
 
 // This file is part of https://github.com/SpringQL/replayman which is licensed under MIT OR Apache-2.0. See file LICENSE-MIT or LICENSE-APACHE for full license details.
 
@@ -57,7 +56,7 @@ impl CmdParser {
         Self(opts)
     }
 
-    pub(super) fn logs(&self) -> Result<ForeignSourceInput> {
+    pub(super) fn logs(&self) -> Result<TimedStream> {
         let log_file_type = match self.0.log_file_type.as_str() {
             "tsv" => Ok(FileType::Tsv),
             _ => Err(anyhow!(
@@ -66,13 +65,13 @@ impl CmdParser {
             )),
         }?;
         let timed_by = self.0.timed_by.to_string();
-        let initial_timestamp = DateTime::parse_from_rfc3339(self.0.initial_timestamp.as_str())?;
+        let initial_timestamp = OffsetDateTime::parse(
+            self.0.initial_timestamp.as_str(),
+            &time::format_description::well_known::Rfc3339,
+        )?;
         let log_file_path = self.0.log_file_path.as_str();
 
-        let timed_stream =
-            TimedStream::new(log_file_type, log_file_path, timed_by, initial_timestamp)?;
-
-        Ok(ForeignSourceInput::new_timed_stream(timed_stream))
+        TimedStream::new(log_file_type, log_file_path, timed_by, initial_timestamp)
     }
 
     pub(super) fn dest(&self) -> Result<Destination> {

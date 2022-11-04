@@ -3,6 +3,7 @@
 mod agent;
 mod cmd_parser;
 mod destination;
+mod timed_stream;
 
 use agent::Agent;
 use cmd_parser::CmdParser;
