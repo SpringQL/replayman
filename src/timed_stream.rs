@@ -1,4 +1,4 @@
-// This file is part of https://github.com/SpringQL/SpringQL which is licensed under MIT OR Apache-2.0. See file LICENSE-MIT or LICENSE-APACHE for full license details.
+// This file is part of https://github.com/SpringQL/replayman which is licensed under MIT OR Apache-2.0. See file LICENSE-MIT or LICENSE-APACHE for full license details.
 
 pub mod file_type;
 
@@ -14,7 +14,7 @@ use crate::timed_stream::{file_parser::FileParser, file_type::FileType, timer::T
 
 const SLEEP_DURATION: Duration = Duration::from_micros(10);
 
-/// Generates lines with older timestamp from "now".
+/// Open a file and read lines with a timestamp fields, then generates lines with past timestamp compared to "now".
 ///
 /// If current line's timestamp is newer than "now", `Iterator::next()` blocks (with sleep).
 ///
@@ -32,9 +32,10 @@ impl TimedStream {
         file_path: P,
         timestamp_field: String,
         virt_initial_datetime: OffsetDateTime,
+        speed: f32,
     ) -> Result<Self> {
         let file_parser = FileParser::new(file_type, file_path)?;
-        let timer = Timer::new(virt_initial_datetime);
+        let timer = Timer::new(virt_initial_datetime, speed);
         Ok(Self {
             timestamp_field,
             timer,

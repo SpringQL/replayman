@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 <!-- markdownlint-disable MD024 -->
 ## [Unreleased]
 
+## [v0.3.0] - 2022-11-04
+
+### Added
+
+- add `speed` parameter [#80](https://github.com/SpringQL/replayman/pull/80)
+
 ## [v0.2.1] - 2022-11-04
 
 Started writing the CHANGELOG.
