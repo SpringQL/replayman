@@ -88,6 +88,7 @@ impl CmdParser {
 
     pub(super) fn dest(&self) -> Result<Destination> {
         match (&self.0.dest_tcp, &self.0.dest_mqtt, &self.0.dest_mqtt_topic) {
+            (None, None, None) => Ok(Destination::Stdout),
             (Some(tcp_addr), None, None) => {
                 let addr = tcp_addr
                     .to_socket_addrs()?
@@ -110,7 +111,7 @@ impl CmdParser {
                     topic: mqtt_topic.to_string(),
                 })
             }
-            _ => Err(anyhow!("A `--dest-*` option is required")),
+            _ => Err(anyhow!("Conflict in `--dest-*` option(s)")),
         }
     }
 }

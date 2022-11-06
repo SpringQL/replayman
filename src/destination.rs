@@ -4,6 +4,7 @@ use std::net::SocketAddr;
 
 #[derive(Eq, PartialEq, Debug)]
 pub(super) enum Destination {
+    Stdout,
     Tcp(SocketAddr),
     Mqtt {
         host: String,

@@ -20,6 +20,15 @@ curl -O https://raw.githubusercontent.com/SpringQL/dataset/main/pseudo-in-vehicl
 
 ### Usage
 
+#### stdout
+
+```bash
+$ replayman \
+  --timed-by Time \
+  --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
+  AirConditioner-30sec.tsv
+```
+
 #### TCP socket
 
 ```bash
