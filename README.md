@@ -73,7 +73,7 @@ kafka-console-consumer --bootstrap-server localhost:9092 --topic replayman-test 
 $ replayman \
   --timed-by Time \
   --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
-  --dest-kafka '127.0.0.1:9092' \
+  --dest-kafka-bootstrap '127.0.0.1:9092' \
   --dest-kafka-topic 'replayman-test' \
   AirConditioner-30sec.tsv
 ```

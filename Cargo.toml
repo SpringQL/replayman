@@ -26,5 +26,7 @@ clap = {version = "4.0", features = ["derive"]}
 
 rumqttc = "0.17"
 
+rdkafka = {version = "0.29", features = ["cmake-build"], default-features = false}
+
 env_logger = "0.9"
 log = "0.4"
