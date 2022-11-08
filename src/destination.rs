@@ -11,4 +11,9 @@ pub(super) enum Destination {
         port: u16,
         topic: String,
     },
+    Kafka {
+        /// e.g. "kafka1:9092,kafka2:9092"
+        bootstrap_servers: String,
+        topic: String,
+    },
 }

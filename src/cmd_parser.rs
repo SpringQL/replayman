@@ -49,6 +49,15 @@ struct Opts {
     #[clap(long)]
     dest_mqtt_topic: Option<String>,
 
+    /// Kafka bootstrap server's address:port to publish logs to.
+    ///
+    /// (e.g. --dest-kafka 'localhost:9092' --dest-kafka-topic 'your-topic')
+    #[clap(long)]
+    dest_kafka_bootstrap: Option<String>,
+    /// Kafka topic.
+    #[clap(long)]
+    dest_kafka_topic: Option<String>,
+
     /// Log file to replay
     log_file_path: String,
 }
@@ -87,16 +96,27 @@ impl CmdParser {
     }
 
     pub(super) fn dest(&self) -> Result<Destination> {
-        match (&self.0.dest_tcp, &self.0.dest_mqtt, &self.0.dest_mqtt_topic) {
-            (None, None, None) => Ok(Destination::Stdout),
-            (Some(tcp_addr), None, None) => {
+        match (
+            &self.0.dest_tcp,
+            &self.0.dest_mqtt,
+            &self.0.dest_mqtt_topic,
+            &self.0.dest_kafka_bootstrap,
+            &self.0.dest_kafka_topic,
+        ) {
+            // stdout
+            (None, None, None, None, None) => Ok(Destination::Stdout),
+
+            // TCP
+            (Some(tcp_addr), None, None, None, None) => {
                 let addr = tcp_addr
                     .to_socket_addrs()?
                     .next()
                     .context("empty address?")?;
                 Ok(Destination::Tcp(addr))
             }
-            (None, Some(mqtt_addr), Some(mqtt_topic)) => {
+
+            // MQTT
+            (None, Some(mqtt_addr), Some(mqtt_topic), None, None) => {
                 let errmsg = || format!("failed to parse MQTT address: {}", mqtt_addr);
 
                 let mut addr = mqtt_addr.split(':');
@@ -111,6 +131,15 @@ impl CmdParser {
                     topic: mqtt_topic.to_string(),
                 })
             }
+
+            // Kafka
+            (None, None, None, Some(kafka_bootstrap_servers), Some(kafka_topic)) => {
+                Ok(Destination::Kafka {
+                    bootstrap_servers: kafka_bootstrap_servers.to_string(),
+                    topic: kafka_topic.to_string(),
+                })
+            }
+
             _ => Err(anyhow!("Conflict in `--dest-*` option(s)")),
         }
     }
