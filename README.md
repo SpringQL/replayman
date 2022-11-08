@@ -60,6 +60,24 @@ $ replayman \
   AirConditioner-30sec.tsv
 ```
 
+#### Kafka
+
+```bash
+# create `replayman-test` topic
+kafka-topics --create --bootstrap-server localhost:9092 --topic replayman-test --replication-factor 1 --partitions 1
+# subscribe to `replayman-test` topic
+kafka-console-consumer --bootstrap-server localhost:9092 --topic replayman-test --from-beginning
+```
+
+```bash
+$ replayman \
+  --timed-by Time \
+  --initial-timestamp '2020-10-21T10:37:56.000+09:00' \
+  --dest-kafka '127.0.0.1:9092' \
+  --dest-kafka-topic 'replayman-test' \
+  AirConditioner-30sec.tsv
+```
+
 ## License
 
 Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT) at your option.
