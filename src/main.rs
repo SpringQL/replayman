@@ -8,7 +8,8 @@ mod timed_stream;
 use agent::Agent;
 use cmd_parser::CmdParser;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let _ = env_logger::builder()
         .is_test(false) // To enable color. Logs are not captured by test framework.
         .try_init();
@@ -20,6 +21,6 @@ fn main() {
     let mut agent = Agent::new(dest).unwrap();
     for j in input {
         let j = j.unwrap();
-        agent.write(j.to_string()).unwrap()
+        agent.write(j.to_string()).await.unwrap()
     }
 }
