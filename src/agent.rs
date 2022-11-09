@@ -32,16 +32,16 @@ impl Agent {
             Destination::Kafka {
                 bootstrap_servers,
                 topic,
-            } => Ok(Self::Kafka(KafkaAgent::new(bootstrap_servers, topic)?)),
+            } => Ok(Self::Kafka(KafkaAgent::new(bootstrap_servers, topic))),
         }
     }
 
-    pub(super) fn write(&mut self, log: String) -> Result<()> {
+    pub(super) async fn write(&mut self, log: String) -> Result<()> {
         match self {
             Agent::Stdout(agent) => agent.write(&log),
             Agent::Tcp(agent) => agent.write(log),
             Agent::Mqtt(agent) => agent.write(log),
-            Agent::Kafka(agent) => agent.write(log),
+            Agent::Kafka(agent) => agent.write(log).await,
         }
     }
 }
