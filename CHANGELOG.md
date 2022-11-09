@@ -7,6 +7,16 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 <!-- markdownlint-disable MD024 -->
 ## [Unreleased]
 
+## [v0.5.1] - 2022-11-09
+
+(Internal changes only)
+
+## [v0.5.0] - 2022-11-09
+
+### Added
+
+- log to Kafka [#85](https://github.com/SpringQL/replayman/pull/85)
+
 ## [v0.4.0] - 2022-11-06
 
 ### Added
@@ -30,8 +40,10 @@ Started writing the CHANGELOG.
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[Unreleased]: https://github.com/SpringQL/replayman/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/SpringQL/replayman/compare/v0.5.1...HEAD
 [Released]: https://github.com/SpringQL/replayman/releases
+[v0.5.1]: https://github.com/SpringQL/replayman/compare/v0.5.0...v0.5.1
+[v0.5.0]: https://github.com/SpringQL/replayman/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/SpringQL/replayman/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/SpringQL/replayman/compare/v0.2.1...v0.3.0
 [v0.2.1]: https://github.com/SpringQL/replayman/releases/v0.2.1
