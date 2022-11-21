@@ -28,7 +28,7 @@ rumqttc = "0.17"
 
 rdkafka = {version = "0.29", features = ["cmake-build"]}
 
-tokio = {version = "1.21", features = ["full"]}
+tokio = {version = "1.22", features = ["full"]}
 
 env_logger = "0.9"
 log = "0.4"
