@@ -17,7 +17,7 @@ repository = "https://github.com/SpringQL/replayman"
 [dependencies]
 time = {version = "0.3.9", features = ["formatting", "parsing", "macros"]}
 
-csv = "1.1"
+csv = "1.2"
 serde_json = "1.0"
 
 anyhow = "1.0"
